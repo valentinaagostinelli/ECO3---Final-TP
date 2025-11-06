@@ -4,40 +4,28 @@
   <meta charset="UTF-8">
   <title>BifeConJuguito - Votar combo</title>
   <style>
-    body {
-      font-family: Arial;
-      background-color: #f2f2f2;
-    }
-    h2 {
-      text-align: center;
-    }
+    body { font-family: Arial; background-color: #f2f2f2; text-align: center; }
+    h2 { margin-top: 30px; }
     form {
       background-color: white;
-      width: 300px;
-      margin: 40px auto;
+      width: 320px;
+      margin: 30px auto;
       padding: 20px;
       border-radius: 10px;
-      box-shadow: 0px 0px 5px gray;
+      box-shadow: 0 0 5px gray;
+      text-align: left;
     }
-    label {
-      display: block;
-      margin: 8px 0;
-    }
+    label { display: block; margin: 6px 0; }
     button, a {
       display: inline-block;
       margin-top: 10px;
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 5px;
       text-decoration: none;
       color: white;
     }
-    button {
-      background-color: #007bff;
-      border: none;
-    }
-    a {
-      background-color: #28a745;
-    }
+    button { background-color: #007bff; border: none; }
+    a { background-color: #28a745; }
   </style>
 </head>
 <body>
@@ -45,17 +33,25 @@
   <h2> Votá tu combo favorito</h2>
 
   <?php
-  // Conexión a la base
- $conexion = mysqli_connect("sql207.infinityfree.com", "if0_40332512", "Bifeconjuguito", "if0_40332512_bifeconjuguito");
+  // Conexión a la base de datos de InfinityFree
+  $conexion = mysqli_connect(
+    "sql207.infinityfree.com",
+    "if0_40332512",
+    "Bifeconjuguito",
+    "if0_40332512_bifeconjuguito"
+  );
 
-
+  if (!$conexion) {
+    echo "<p style='color:red;'> Error de conexión: " . mysqli_connect_error() . "</p>";
+    exit;
+  }
 
   // Si se envió el formulario
   if (isset($_POST["combo"])) {
     $combo = $_POST["combo"];
     $sql = "UPDATE combos SET votos = votos + 1 WHERE id = $combo";
     mysqli_query($conexion, $sql);
-    echo "<p style='text-align:center; color:green;'>¡Gracias! Tu voto fue registrado.</p>";
+    echo "<p style='color:green;'>¡Gracias! Tu voto fue registrado.</p>";
   }
   ?>
 
@@ -68,7 +64,7 @@
     <label><input type="radio" name="combo" value="6"> Combo 6 - Diablo Ácido</label>
 
     <button type="submit">Votar</button>
-    <a href="https://bifeconjuguito.gt.tc/graficos.php">Ver gráfico</a>
+    <a href="graficos.php">Ver gráfico</a>
   </form>
 
 </body>
